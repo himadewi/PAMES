@@ -31,6 +31,8 @@ compute_AUC <- function(tumor, control, max_NAs_frac=1, parallel=FALSE){
 
   message(sprintf("[%s] Checking per-row NAs fraction...",  Sys.time()))
   auc <- rep(NA, nrow(tumor))
+  names(auc) <- rownames(tumor)
+
   valid_tumor_row_logi <- apply(tumor, 1, function(x) sum(is.na(x)) / length(x) < max_NAs_frac)
   valid_control_row_logi <- apply(control, 1, function(x) sum(is.na(x)) / length(x) < max_NAs_frac)
   valid_row_idx <- which(valid_tumor_row_logi & valid_control_row_logi)
@@ -57,6 +59,5 @@ compute_AUC <- function(tumor, control, max_NAs_frac=1, parallel=FALSE){
   message(sprintf("[%s] Done",  Sys.time()))
 
   # allow using subsets of a platform's probes
-  names(auc) <- rownames(tumor)[which(valid_row_idx),]
   return(auc)
 }
