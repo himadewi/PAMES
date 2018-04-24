@@ -41,20 +41,5 @@
 
 #' Toy data
 #'
-#' Example of tumor beta values from Bisulphite Sequencing
-"bs_tumor_toy_data"
-
-#' Toy data
-#'
-#' Example of control beta values from Bisulphite Sequencing
-"bs_control_toy_data"
-
-#' Toy data
-#'
-#' Example of data.frame with location of CpG sites
-"bs_toy_sites"
-
-#' Toy data
-#'
 #' Example of data to map CpG sites to single CpG islands
 "bs_toy_indexes"

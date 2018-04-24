@@ -18,8 +18,8 @@ downloaded from [UCSC Genome Browser](https://genome.ucsc.edu/) on date 2016-03-
 Associate CpG islands to corresponding CpG sites
 }
 \examples{
-cpg_indexes_short <- compute_islands_indexes(bs_toy_sites, head(cpg_islands,10))
 \dontrun{
+cpg_indexes_short <- compute_islands_indexes(bs_toy_sites, head(cpg_islands,10))
 cpg_indexes <- compute_islands_indexes(bs_toy_sites)
 }
 }

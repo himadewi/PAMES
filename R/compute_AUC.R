@@ -13,10 +13,16 @@
 #' auc_data <- compute_AUC(tumor_toy_data, control_toy_data)
 #' auc_data_bs <- compute_AUC(bs_tumor_toy_data, bs_control_toy_data)
 compute_AUC <- function(tumor, control, max_NAs_frac=1){
-  tumor <- as.matrix(tumor)
-  control <- as.matrix(control)
-  stopifnot(max_NAs_frac >= 0 | max_NAs_frac <= 1)
+
   stopifnot(nrow(tumor) == nrow(control))
+  stopifnot(max_NAs_frac >= 0 | max_NAs_frac <= 1)
+  stopifnot(identical(rownames(tumor), rownames(control)))
+
+  if (is(tumor, "GenomicRatioSet")) tumor <- getBeta(tumor)
+  tumor <- as.matrix(tumor)
+  
+  if (is(control, "GenomicRatioSet")) control <- getBeta(control)
+  control <- as.matrix(control)
 
   message(sprintf("[%s] Checking per-row NAs fraction...",  Sys.time()))
   auc <- rep(NA, nrow(tumor))
@@ -34,5 +40,8 @@ compute_AUC <- function(tumor, control, max_NAs_frac=1){
   })
   auc[valid_row_idx] <- valid_auc
   message(sprintf("[%s] Done",  Sys.time()))
+
+  # allow using subsets of a platform's probes
+  names(auc) <- rownames(tumor)[valid_row_idx,]
   return(auc)
 }
