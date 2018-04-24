@@ -50,14 +50,14 @@ select_informative_sites <- function(tumor, auc, max_sites = 20,
   platform_data <- get(paste0("illumina", platform, "_", genome))[names(auc),]
   # by subsetting the platform data, we can sidestep a number of annoyances
 
+  tumor <- as.matrix(tumor[names(auc),])
   auc <- as.vector(auc)
-  tumor <- as.matrix(tumor)
   if (any(tumor < 0, na.rm = T) || any(tumor > 1, na.rm = T) ||
       any(auc   < 0, na.rm = T) || any(auc   > 1, na.rm = T)){
     stop("'tumor' must be a numeric matrix and 'auc' must be a numeric vector.")
   }
 
-  if (nrow(tumor) != length(auc) | !identical(rownames(tumor), names(auc))) {
+  if (nrow(tumor) != length(auc)) {
     stop("'tumor' and 'auc' must have the same number of same-named probes.")
   }
 
